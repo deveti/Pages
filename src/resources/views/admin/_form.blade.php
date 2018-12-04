@@ -1,7 +1,3 @@
-@push('js')
-    <script src="{{ asset('components/ckeditor/ckeditor.js') }}"></script>
-@endpush
-
 @component('core::admin._buttons-form', ['model' => $model])
 @endcomponent
 
@@ -55,7 +51,11 @@
             {!! TranslatableBootForm::hidden('status')->value(0) !!}
             {!! TranslatableBootForm::checkbox(__('Published'), 'status') !!}
         </div>
-        {!! TranslatableBootForm::textarea(__('Body'), 'body')->addClass('ckeditor') !!}
+
+        @foreach (config('translatable-bootforms.locales') as $locale)
+            {{ $locale }}
+            <editor-field></editor-field>
+        @endforeach
 
         @can('see-all-page_sections')
         @if ($model->id)
